@@ -63,11 +63,11 @@ button {
       <tbody>
         <tr *ngFor="let customer of customers">
           <td>{{ customer.id }}</td>
-          <td>{{ customer.name }}</td>
+          <td>{{ customer.fullName }}</td>
           <td>{{ customer.email }}</td>
           <td>{{ customer.phone }}</td>
-          <button (click)="updateUser()">Update</button>
-          <button (click)="deleteUser()">Delete</button>
+          <button (click)="updateUser(customer)">Edit</button>
+          <button (click)="deleteUser(customer.id, customer.fullName)">Delete</button>
         </tr>
       </tbody>
     </table>

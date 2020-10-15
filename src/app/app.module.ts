@@ -8,8 +8,9 @@ import { NewCustomerComponent } from './forms/new-customer/new-customer.componen
 import { AppRoutingModule } from './app-routing.module';
 import { UsersListComponent } from './users-list/users-list.component';
 import { FormsModule } from '@angular/forms';
+import { UpdateUserComponent } from './forms/update-user/update-user.component';
 @NgModule({
-  declarations: [AppComponent, NewCustomerComponent, UsersListComponent],
+  declarations: [AppComponent, NewCustomerComponent, UsersListComponent, UpdateUserComponent],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule, FormsModule],
   providers: [UsersService],
   bootstrap: [AppComponent],

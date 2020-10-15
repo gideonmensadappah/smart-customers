@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../users.service';
+import { Router } from '@angular/router';
 import { User } from '../user.model';
 
 @Component({
@@ -10,26 +11,38 @@ import { User } from '../user.model';
 export class UsersListComponent implements OnInit {
   customers: Array<User>;
 
-  constructor(private usersService: UsersService) {
-    this.getUsers();
+  constructor(private usersService: UsersService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.usersService.refreshCustomersList.subscribe(() => {
+      this.customersList();
+    });
+    this.customersList();
   }
 
-  ngOnInit(): void {}
-
-  getUsers() {
-    this.usersService
-      .getUsers()
-      .subscribe((res: Array<User>) => (this.customers = res));
+  private customersList(): void {
+    this.usersService.getUsers().subscribe((res: Array<User>) => {
+      this.customers = res;
+    });
   }
 
-  updateUser() {
-    alert('update!');
+  updateUser({ fullName, email, phone, id }: User): void {
+    this.router.navigate(['/edit-customer'], {
+      queryParams: {
+        fullName,
+        email,
+        id,
+        phone,
+      },
+    });
   }
 
-  deleteUser() {
-    const res = confirm('are you sure?');
+  deleteUser(id: string, name: string): void {
+    const res = confirm(`are you sure you want to delete ${name}?`);
     if (res) {
-      // delete!
+      this.usersService.deleteCustomer(id).subscribe(() => {
+        this.customersList();
+      });
     }
   }
 }
